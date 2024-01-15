@@ -1,11 +1,13 @@
 package com.ali.socialmedia.core.exceptions.validationException;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.HashMap;
 
 public class ValidationExceptionDetails {
     private HashMap<String,String> validationErrors;
     private final long timestamp = System.currentTimeMillis();
-    private final long statusCode = 400;
+    private final int statusCode = HttpStatus.BAD_REQUEST.value();
 
     public ValidationExceptionDetails() {
     }
@@ -18,4 +20,11 @@ public class ValidationExceptionDetails {
         this.validationErrors = validationErrors;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
 }
