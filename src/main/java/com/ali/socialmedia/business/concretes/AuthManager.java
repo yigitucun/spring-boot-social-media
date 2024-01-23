@@ -8,7 +8,9 @@ import com.ali.socialmedia.core.dto.requests.AuthenticateRequest;
 import com.ali.socialmedia.core.dto.responses.TokenResponse;
 import com.ali.socialmedia.core.utils.jwtService.JwtService;
 import com.ali.socialmedia.core.utils.modelMapper.ModelMapperService;
+import com.ali.socialmedia.dataAccess.abstracts.IProfileRepository;
 import com.ali.socialmedia.dataAccess.abstracts.IUserRepository;
+import com.ali.socialmedia.entities.concretes.Profile;
 import com.ali.socialmedia.entities.concretes.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,14 +25,16 @@ public class AuthManager implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserBusinessRules userBusinessRules;
+    private final IProfileRepository profileRepository;
 
-    public AuthManager(ModelMapperService mapperService, IUserRepository userRepository, PasswordEncoder encoder, AuthenticationManager authenticationManager, JwtService jwtService, UserBusinessRules userBusinessRules) {
+    public AuthManager(ModelMapperService mapperService, IUserRepository userRepository, PasswordEncoder encoder, AuthenticationManager authenticationManager, JwtService jwtService, UserBusinessRules userBusinessRules, IProfileRepository profileRepository) {
         this.mapperService = mapperService;
         this.userRepository = userRepository;
         this.encoder = encoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.userBusinessRules = userBusinessRules;
+        this.profileRepository = profileRepository;
     }
 
     @Override
@@ -50,7 +54,12 @@ public class AuthManager implements AuthService {
     @Override
     public AddUserRequest add(AddUserRequest request) {
         request.setPassword(this.encoder.encode(request.getPassword()));
-        this.userRepository.save(this.mapperService.toEntity(User.class,request));
+        User user = this.mapperService.toEntity(User.class,request);
+        this.userRepository.save(user);
+        Profile profile = new Profile();
+        profile.setUser(user);
+        profile.setProfilePhotoUrl("default.png");
+        this.profileRepository.save(profile);
         return request;
     }
 }
