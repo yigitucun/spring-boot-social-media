@@ -2,14 +2,16 @@ package com.ali.socialmedia.entities.concretes;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "comments")
-public class Comment extends BaseEntity {
+public class Comment extends BaseEntity implements Serializable {
     private String comment;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "post_id")
     private Post post;
 
