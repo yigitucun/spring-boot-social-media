@@ -6,11 +6,12 @@ import jakarta.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails, Serializable {
     private String firstName;
     private String lastName;
     @Column(unique = true)
