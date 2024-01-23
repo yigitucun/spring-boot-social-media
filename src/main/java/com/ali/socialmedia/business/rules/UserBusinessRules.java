@@ -15,6 +15,12 @@ public class UserBusinessRules {
         this.userRepository = userRepository;
         this.encoder = encoder;
     }
+
+    public void checkIfUserId(int id){
+        if (!this.userRepository.existsById(id)){
+            throw new BusinessException("User not found",HttpStatus.BAD_REQUEST);
+        }
+    }
     public void checkIfPasswordIsMatch(String password,String hashPassword){
         if (!encoder.matches(password,hashPassword)){
             throw new BusinessException("Username or Password wrong", HttpStatus.BAD_REQUEST);
