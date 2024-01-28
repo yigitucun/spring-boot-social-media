@@ -2,7 +2,6 @@ package com.ali.socialmedia.business.concretes;
 
 import com.ali.socialmedia.business.abstracts.AuthService;
 import com.ali.socialmedia.business.rules.UserBusinessRules;
-import com.ali.socialmedia.core.configs.CustomUserDetailService;
 import com.ali.socialmedia.core.dto.requests.AddUserRequest;
 import com.ali.socialmedia.core.dto.requests.AuthenticateRequest;
 import com.ali.socialmedia.core.dto.responses.TokenResponse;
@@ -58,7 +57,6 @@ public class AuthManager implements AuthService {
         this.userRepository.save(user);
         Profile profile = new Profile();
         profile.setUser(user);
-        profile.setProfilePhotoUrl("default.png");
         this.profileRepository.save(profile);
         return request;
     }

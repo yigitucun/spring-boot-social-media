@@ -3,6 +3,7 @@ package com.ali.socialmedia.entities.concretes;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,18 +17,21 @@ public class Post extends BaseEntity implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> likes;
+
+    @OneToMany(mappedBy = "post",cascade = CascadeType.REMOVE)
+    private Set<Comment> comments;
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    private String postImageUrl;
-
-    public String getPostImageUrl() {
-        return postImageUrl;
-    }
-
-    public void setPostImageUrl(String postImageUrl) {
-        this.postImageUrl = postImageUrl;
-    }
 
     public Post() {
     }

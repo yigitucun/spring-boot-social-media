@@ -5,4 +5,5 @@ import com.ali.socialmedia.core.dto.requests.AddCommentRequest;
 
 public interface CommentService {
     AddCommentRequest add(AddCommentRequest request);
+    void delete(int commentId,int userId);
 }

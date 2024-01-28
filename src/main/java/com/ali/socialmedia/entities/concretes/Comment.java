@@ -8,10 +8,10 @@ import java.io.Serializable;
 @Table(name = "comments")
 public class Comment extends BaseEntity implements Serializable {
     private String comment;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 

@@ -1,10 +1,10 @@
 package com.ali.socialmedia.business.abstracts;
 
 import com.ali.socialmedia.core.dto.requests.AddPostRequest;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
+import com.ali.socialmedia.core.dto.requests.UpdatePostRequest;
 
 public interface PostService {
-    AddPostRequest add(MultipartFile file,AddPostRequest request) throws IOException;
+    AddPostRequest add(AddPostRequest request);
+    void deleteById(int userId, int postId);
+    UpdatePostRequest update(UpdatePostRequest request);
 }

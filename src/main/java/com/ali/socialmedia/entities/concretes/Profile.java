@@ -11,27 +11,25 @@ public class Profile extends BaseEntity implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String bio;
     private String location;
-    private String profilePhotoUrl;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "followers",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
     private Set<User> followers;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "followings",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "following_id")
     )
     private Set<User> followings;
-    public Profile(String bio, String location, String profilePhotoUrl, User user, Set<User> followers, Set<User> followings) {
+    public Profile(String bio, String location, User user, Set<User> followers, Set<User> followings) {
         this.bio = bio;
         this.location = location;
-        this.profilePhotoUrl = profilePhotoUrl;
         this.user = user;
         this.followers = followers;
         this.followings = followings;
@@ -80,11 +78,4 @@ public class Profile extends BaseEntity implements Serializable {
         this.location = location;
     }
 
-    public String getProfilePhotoUrl() {
-        return profilePhotoUrl;
-    }
-
-    public void setProfilePhotoUrl(String profilePhotoUrl) {
-        this.profilePhotoUrl = profilePhotoUrl;
-    }
 }

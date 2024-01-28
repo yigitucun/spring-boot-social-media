@@ -1,11 +1,11 @@
 package com.ali.socialmedia.business.abstracts;
 
 import com.ali.socialmedia.core.dto.requests.UpdateProfileRequest;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
+import com.ali.socialmedia.entities.concretes.Profile;
+import com.ali.socialmedia.projections.profile.IDetailProfileProjection;
 
 public interface ProfileService {
-    UpdateProfileRequest update(UpdateProfileRequest request, @RequestParam("image") MultipartFile image) throws IOException;
+    UpdateProfileRequest update(UpdateProfileRequest request);
+    Profile detail(int id);
+    void follow(int followedUserId,int followingUserId);
 }

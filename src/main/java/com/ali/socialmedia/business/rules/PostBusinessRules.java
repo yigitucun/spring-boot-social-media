@@ -17,4 +17,5 @@ public class PostBusinessRules {
             throw new BusinessException("Post not found", HttpStatus.BAD_REQUEST);
         }
     }
+
 }

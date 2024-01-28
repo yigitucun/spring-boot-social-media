@@ -5,9 +5,6 @@ import com.ali.socialmedia.core.dto.requests.UpdateProfileRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/profiles")
@@ -18,9 +15,20 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
+    @PostMapping("/{followedId}/{followingId}")
+    public ResponseEntity<?> follow(@PathVariable int followedId,@PathVariable int followingId){
+        this.profileService.follow(followedId,followingId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> detail(@PathVariable int id){
+        return ResponseEntity.ok(this.profileService.detail(id));
+    }
+
     @PutMapping
-    public ResponseEntity<?> update(@RequestParam("image") MultipartFile image, @ModelAttribute UpdateProfileRequest request) throws IOException {
-        return new ResponseEntity<>(this.profileService.update(request,image), HttpStatus.OK);
+    public ResponseEntity<?> update( @RequestBody UpdateProfileRequest request){
+        return new ResponseEntity<>(this.profileService.update(request), HttpStatus.OK);
     }
 
 }
